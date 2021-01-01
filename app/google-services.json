@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "782423866990",
+    "project_id": "my-memory-40f3e",
+    "storage_bucket": "my-memory-40f3e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:782423866990:android:1c8f13d238f8254001307f",
+        "android_client_info": {
+          "package_name": "com.emissa.mymemory"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "782423866990-k5mfuu94fil0tmp6pspf1poe4oshackc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDVX1uRlmNw74GCFS58JT8ms80A7eYgZaw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "782423866990-k5mfuu94fil0tmp6pspf1poe4oshackc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
