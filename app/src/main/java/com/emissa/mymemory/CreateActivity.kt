@@ -196,7 +196,7 @@ class CreateActivity : AppCompatActivity() {
     }
 
     private fun handleAllImagesUploaded(gameName: String, imageUrls: MutableList<String>) {
-        // upload to Firestore
+        // upload this info to Firestore
     }
 
     private fun getImageByteArray(photoUri: Uri): ByteArray {
