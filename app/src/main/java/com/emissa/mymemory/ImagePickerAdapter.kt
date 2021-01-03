@@ -55,7 +55,7 @@ class ImagePickerAdapter(
 
         fun bind() {
             ivCustomImage.setOnClickListener {
-                // launch intent for user to select photos from his phone
+                // launch intent for user to select photos from their phone
                 imageClickListener.onPlaceholderClicked()
             }
         }

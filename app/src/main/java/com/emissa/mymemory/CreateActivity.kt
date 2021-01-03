@@ -69,9 +69,9 @@ class CreateActivity : AppCompatActivity() {
         // inform user about how many images to select base on the typ of game they want (ex: 4 images for Easy game)
         supportActionBar?.title = "Choose pics (0 / $numImagesRequired)"
 
-//        btnSave.setOnClickListener(
-//            saveDataToFireBase()
-//        )
+        btnSave.setOnClickListener{
+            saveDataToFireBase()
+        }
 
         // set max length for game name
         etGameName.filters = arrayOf(InputFilter.LengthFilter(MAX_GAME_NAME_LENGTH))
@@ -90,10 +90,10 @@ class CreateActivity : AppCompatActivity() {
             override fun onPlaceholderClicked() {
                 // check if user granted permission to the app to access photos/storage on their phone
                 if (isPermissionGranted(this@CreateActivity, READ_PHOTOS_PERMISSION)) {
-                    // launch the photos
+                    // launch the photos from anywhere(gallery, google photos, etc) on user's phone
                     launchIntentForPhotos()
                 } else {
-                    // request permission
+                    // request permission from user to access phone's storage
                     requestPermission(this@CreateActivity, READ_PHOTOS_PERMISSION, READ_EXTERNAL_PHOTO_CODE)
                 }
             }
@@ -137,13 +137,13 @@ class CreateActivity : AppCompatActivity() {
             return
         }
 
-        // when usr inputed valid data
+        // when usr inputted valid data
         val selectedUri = data.data
-        val clipdData = data.clipData
-        if (clipdData != null) {
-            Log.i(TAG, "ClipData numImages ${clipdData.itemCount}: $clipdData")
-            for (i in 0 until clipdData.itemCount) {
-                val clipItem = clipdData.getItemAt(i)
+        val clipData = data.clipData
+        if (clipData != null) {
+            Log.i(TAG, "ClipData numImages ${clipData.itemCount}: $clipData")
+            for (i in 0 until clipData.itemCount) {
+                val clipItem = clipData.getItemAt(i)
                 if (chosenImageUris.size < numImagesRequired) {
                     chosenImageUris.add(clipItem.uri)
                 }
@@ -167,7 +167,7 @@ class CreateActivity : AppCompatActivity() {
 
         Log.i(TAG, "savedDataToFireBase")
         for ((index, photoUri) in chosenImageUris.withIndex()) {
-            // downgrade photo size and handle quality
+            // downgrade photo size and downscale image quality
             val imageByteArray = getImageByteArray(photoUri)
             val filePath = "images/$customGameName/${System.currentTimeMillis()}-${index}.jpg"
             val photoReference = storage.reference.child(filePath)
@@ -200,10 +200,12 @@ class CreateActivity : AppCompatActivity() {
     }
 
     private fun getImageByteArray(photoUri: Uri): ByteArray {
+        // handle android version of user's phone
         val originalBitmap = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             val source = ImageDecoder.createSource(contentResolver, photoUri)
             ImageDecoder.decodeBitmap(source)
         } else {
+            // android version older than Android Pi
             MediaStore.Images.Media.getBitmap(contentResolver, photoUri)
         }
         Log.i(TAG, "Original width ${originalBitmap.width} and height ${originalBitmap.height}")
@@ -228,6 +230,7 @@ class CreateActivity : AppCompatActivity() {
     private fun launchIntentForPhotos() {
         // this is an implicit intent
         val intent = Intent(Intent.ACTION_PICK)
+        // specify the type to only load images (no videos, or other files)
         intent.type = "image/*"
         //allow user to pick multiples photos at once
         intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
