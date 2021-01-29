@@ -1,6 +1,7 @@
 package com.emissa.mymemory
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -18,14 +19,12 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.emissa.mymemory.models.BoardSize
-import com.emissa.mymemory.utils.BitmapScaler
-import com.emissa.mymemory.utils.EXTRA_BOARD_SIZE
-import com.emissa.mymemory.utils.isPermissionGranted
-import com.emissa.mymemory.utils.requestPermission
+import com.emissa.mymemory.utils.*
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
@@ -45,6 +44,7 @@ class CreateActivity : AppCompatActivity() {
     private lateinit var rvImagePicker: RecyclerView
     private lateinit var etGameName: EditText
     private lateinit var btnSave: Button
+    private lateinit var pbUploading: ProgressBar
 
     private lateinit var adapter: ImagePickerAdapter
     private lateinit var boardSize: BoardSize
@@ -60,6 +60,7 @@ class CreateActivity : AppCompatActivity() {
         rvImagePicker = findViewById(R.id.rvImagePicker)
         etGameName = findViewById(R.id.etGameName)
         btnSave = findViewById(R.id.btnSave)
+        pbUploading = findViewById(R.id.pbUploading)
 
         // show go back to home icon
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -67,7 +68,7 @@ class CreateActivity : AppCompatActivity() {
         boardSize = intent.getSerializableExtra(EXTRA_BOARD_SIZE) as BoardSize
         numImagesRequired = boardSize.getNumPairs()
         // inform user about how many images to select base on the typ of game they want (ex: 4 images for Easy game)
-        supportActionBar?.title = "Choose pics (0 / $numImagesRequired)"
+        supportActionBar?.title = getString(R.string.choose_pics) + " (0 / $numImagesRequired)"
 
         btnSave.setOnClickListener{
             saveDataToFireBase()
@@ -115,7 +116,7 @@ class CreateActivity : AppCompatActivity() {
                 launchIntentForPhotos()
             } else {
                 // the user did not grant the app to access their photo/storage
-                Toast.makeText(this, "In order to create a custom game, you need to provide access to your photos", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, getString(R.string.phone_storage_access), Toast.LENGTH_LONG).show()
             }
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
@@ -155,48 +156,104 @@ class CreateActivity : AppCompatActivity() {
 
         adapter.notifyDataSetChanged()
         // update title of the activity to notify user on how many photos the picked so far
-        supportActionBar?.title = "Choose pics (${chosenImageUris.size} / $numImagesRequired)"
+        supportActionBar?.title = getString(R.string.choose_pics) + " (${chosenImageUris.size} / $numImagesRequired)"
         // toggle active on save button after all conditions are met
         btnSave.isEnabled = shouldEnableSaveButton()
     }
 
     private fun saveDataToFireBase() {
+        Log.i(TAG, "savedDataToFireBase")
+
+        //disable save button when user clicks on it
+        btnSave.isEnabled = false
+
         val customGameName = etGameName.text.toString()
+        // check that we're not over writing someone else's data
+        db.collection("games").document(customGameName).get().addOnSuccessListener { document ->
+            if (document != null && document.data != null) {
+                AlertDialog.Builder(this)
+                        .setTitle(getString(R.string.name_taken))
+                        .setMessage(getString(R.string.name_taken_details) + "'$customGameName'. " + getString(R.string.name_taken_details_2))
+                        .setPositiveButton("OK", null)
+                        .show()
+                // enable the save button to let user enter a new game name and save it
+                btnSave.isEnabled = true
+            } else {
+                handleImageUploading(customGameName)
+            }
+        }.addOnFailureListener { exception ->
+            Log.e(TAG, "Encountered error while saving memory game", exception)
+            Toast.makeText(this, getString(R.string.saving_game_error), Toast.LENGTH_SHORT).show()
+            // enable the save button to let user enter a new game name and save it
+            btnSave.isEnabled = true
+        }
+    }
+
+    private fun handleImageUploading(gameName: String) {
+        // set progress bar visible once images start uploading
+        pbUploading.visibility = View.VISIBLE
+
         val uploadedImageUrls = mutableListOf<String>()
         var didEncounterError = false
 
-        Log.i(TAG, "savedDataToFireBase")
         for ((index, photoUri) in chosenImageUris.withIndex()) {
             // downgrade photo size and downscale image quality
             val imageByteArray = getImageByteArray(photoUri)
-            val filePath = "images/$customGameName/${System.currentTimeMillis()}-${index}.jpg"
+            val filePath = "images/$gameName/${System.currentTimeMillis()}-${index}.jpg"
             val photoReference = storage.reference.child(filePath)
             photoReference.putBytes(imageByteArray)
-                .continueWithTask { photoUploadTask ->
-                    Log.i(TAG, "Uploaded bytes: ${photoUploadTask.result?.bytesTransferred}")
-                    photoReference.downloadUrl
-                }.addOnCompleteListener { downloadUrlTask ->
-                    if (!downloadUrlTask.isSuccessful) {
-                        Log.e(TAG, "Exception with Firebase storage", downloadUrlTask.exception)
-                        Toast.makeText(this, "Failed to upload image", Toast.LENGTH_SHORT).show()
-                        didEncounterError = true
-                        return@addOnCompleteListener
+                    .continueWithTask { photoUploadTask ->
+                        Log.i(TAG, "Uploaded bytes: ${photoUploadTask.result?.bytesTransferred}")
+                        photoReference.downloadUrl
+                    }.addOnCompleteListener { downloadUrlTask ->
+                        if (!downloadUrlTask.isSuccessful) {
+                            Log.e(TAG, "Exception with Firebase storage", downloadUrlTask.exception)
+                            Toast.makeText(this, getString(R.string.upload_failed), Toast.LENGTH_SHORT).show()
+                            didEncounterError = true
+                            return@addOnCompleteListener
+                        }
+                        if (didEncounterError) {
+                            // set progress bar visibility to gone if an error is encountered
+                            pbUploading.visibility = View.GONE
+                            return@addOnCompleteListener
+                        }
+
+                        val downloadUrl =  downloadUrlTask.result.toString()
+                        uploadedImageUrls.add(downloadUrl)
+                        // update the progress each time an image is uploaded
+                        pbUploading.progress = uploadedImageUrls.size *100 / chosenImageUris.size
+                        Log.i(TAG, "Finished uploading $photoUri, num uploaded ${uploadedImageUrls.size}")
+                        if (uploadedImageUrls.size == chosenImageUris.size) {
+                            handleAllImagesUploaded(gameName, uploadedImageUrls)
+                        }
                     }
-                    if (didEncounterError) {
-                        return@addOnCompleteListener
-                    }
-                    val downloadUrl =  downloadUrlTask.result.toString()
-                    uploadedImageUrls.add(downloadUrl)
-                    Log.i(TAG, "Finished uploading $photoUri, num uploaded ${uploadedImageUrls.size}")
-                    if (uploadedImageUrls.size == chosenImageUris.size) {
-                        handleAllImagesUploaded(customGameName, uploadedImageUrls)
-                    }
-                }
         }
     }
 
     private fun handleAllImagesUploaded(gameName: String, imageUrls: MutableList<String>) {
         // upload this info to Firestore
+        db.collection("games")
+                .document(gameName)
+                .set(mapOf("images" to imageUrls))
+                .addOnCompleteListener{gameCreationTask ->
+                    // set progress bar visibility to gone once all images are uploaded to firebase
+                    pbUploading.visibility = View.GONE
+                    if (!gameCreationTask.isSuccessful) {
+                        Log.e(TAG, "Exception with game creation", gameCreationTask.exception)
+                        Toast.makeText(this, getString(R.string.game_creation_failed), Toast.LENGTH_SHORT).show()
+                        return@addOnCompleteListener
+                    }
+                    Log.i(TAG, "Successfully created game $gameName")
+                    AlertDialog.Builder(this)
+                            .setTitle(getString(R.string.game_upload_success) + "'$gameName'")
+                            .setPositiveButton("OK") {_, _ ->
+                                // pass back to main activity the game name once user clicks OK button
+                                val resultData = Intent()
+                                resultData.putExtra(EXTRA_GAME_NAME, gameName)
+                                setResult(Activity.RESULT_OK, resultData)
+                                finish()
+                            }.show()
+                }
     }
 
     private fun getImageByteArray(photoUri: Uri): ByteArray {
@@ -234,6 +291,6 @@ class CreateActivity : AppCompatActivity() {
         intent.type = "image/*"
         //allow user to pick multiples photos at once
         intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-        startActivityForResult(Intent.createChooser(intent, "Choose pics"), PICK_PHOTO_CODE)
+        startActivityForResult(Intent.createChooser(intent, getString(R.string.choose_pics)), PICK_PHOTO_CODE)
     }
 }

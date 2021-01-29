@@ -8,6 +8,9 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="color_gray">#E0E0E0</color>
-    <color name="color_progress_none">#DC1E0B</color>
-    <color name="color_progress_full">#35BA01</color>
+    <color name="color_progress_none">#F52614</color>
+    <color name="color_progress_full">#00B312</color>
+    <color name="yellow_dark">#D6C93B</color>
+    <color name="yellow_darkest">#87842E</color>
+    <color name="yellow_green">#CCD647</color>
 </resources>

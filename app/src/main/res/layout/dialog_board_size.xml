@@ -21,18 +21,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:checked="true"
-            android:text="Easy (4 x 2)" />
+            android:text="@string/easy_board" />
 
         <RadioButton
             android:id="@+id/rbMedium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Medium (6 x 3)" />
+            android:text="@string/medium_board" />
 
         <RadioButton
             android:id="@+id/rbHard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Hard (6 x 4)" />
+            android:text="@string/hard_board" />
     </RadioGroup>
 </androidx.constraintlayout.widget.ConstraintLayout>

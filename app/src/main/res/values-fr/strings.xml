@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">My Memory</string>
+    <string name="easy_board">Facile (4 x 2)</string>
+    <string name="medium_board">Moyen (6 x 3)</string>
+    <string name="hard_board">Difficile (6 x 4)</string>
+    <string name="easy">Facile:</string>
+    <string name="medium">Moyen:</string>
+    <string name="hard">Difficile:</string>
+    <string name="save_btn">Enregistrer</string>
+    <string name="et_download_game_name">Entrer nom du jeu</string>
+    <string name="et_game_name">Nom du jeu (exemple: \'panda_fun\')</string>
+    <string name="quit_game">Quitter votre jeu en cours ?</string>
+    <string name="playing_game_name">Entrain de jouer</string>
+    <string name="create_game">Creer un jeu personnalise</string>
+    <string name="choose_game_size">Choisir nouveau</string>
+    <string name="pairs">Pairs:</string>
+    <string name="moves">Mouvement:</string>
+    <string name="invalid_move">Invalide!</string>
+    <string name="game_over">Vous avez deja gagne!</string>
+    <string name="game_win">Felicitations! Vous avez gagne</string>
+    <string name="choose_pics">Choisir images</string>
+    <string name="name_taken">Nom deja pris</string>
+    <string name="name_taken_details">Un jeu existe deja avec ce nom</string>
+    <string name="name_taken_details_2">Choisir un autre</string>
+    <string name="upload_failed">Erreur chargement d\'images</string>
+    <string name="game_creation_failed">Erreur creation de jeu</string>
+    <string name="game_upload_success">Telechargement termine! Jouons a present votre jeu</string>
+    <string name="saving_game_error">Erreur lors de l\'enregistrement du jeu</string>
+    <string name="fetch_game">Chercher le jeu de memoire</string>
+    <string name="game_not_found">Desole, aucun jeu n\'existe sous ce nom</string>
+    <string name="phone_storage_access">Acces a vos photos est necessaire pour la creation du jeu personnalise</string>
+</resources>

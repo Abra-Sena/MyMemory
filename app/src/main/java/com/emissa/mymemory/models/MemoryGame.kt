@@ -2,7 +2,10 @@ package com.emissa.mymemory.models
 
 import com.emissa.mymemory.utils.DEFAULT_ICONS
 
-class MemoryGame (private val boardSize: BoardSize) {
+class MemoryGame(
+    private val boardSize: BoardSize,
+    private val customImages: List<String>?
+) {
 
     val cards: List<MemoryCard>
     var numPairsFound = 0
@@ -11,12 +14,17 @@ class MemoryGame (private val boardSize: BoardSize) {
     private var indexOfSingleSelectedCard: Int? = null
 
     init {
-        //pass into the adapter the list of images icons, the drawable that should make up the game board
-        val chosenImages = DEFAULT_ICONS.shuffled().take(boardSize.getNumPairs())
-        // double the chosen images
-        val randomizedImages = (chosenImages + chosenImages).shuffled()
-        // make a list of the randomized chosen images
-        cards = randomizedImages.map { MemoryCard(it) }
+        if (customImages == null) {
+            //pass into the adapter the list of images icons, the drawable that should make up the game board
+            val chosenImages = DEFAULT_ICONS.shuffled().take(boardSize.getNumPairs())
+            // double the chosen images
+            val randomizedImages = (chosenImages + chosenImages).shuffled()
+            // make a list of the randomized chosen images
+            cards = randomizedImages.map { MemoryCard(it) }
+        } else {
+            val randomizedImages = (customImages + customImages).shuffled()
+            cards = randomizedImages.map { MemoryCard(it.hashCode(), it) }
+        }
     }
 
     fun flipCard(position: Int): Boolean {

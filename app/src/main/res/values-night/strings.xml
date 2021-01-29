@@ -1,5 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">My Memory</string>
     <string name="easy_board">Easy (4 x 2)</string>
     <string name="medium_board">Medium (6 x 3)</string>
     <string name="hard_board">Hard (6 x 4)</string>
