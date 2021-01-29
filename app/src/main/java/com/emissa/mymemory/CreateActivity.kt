@@ -173,7 +173,7 @@ class CreateActivity : AppCompatActivity() {
             if (document != null && document.data != null) {
                 AlertDialog.Builder(this)
                         .setTitle(getString(R.string.name_taken))
-                        .setMessage(getString(R.string.name_taken_details) + "'$customGameName'. " + getString(R.string.name_taken_details_2))
+                        .setMessage(getString(R.string.name_taken_details) + " '$customGameName'. " + getString(R.string.name_taken_details_2))
                         .setPositiveButton("OK", null)
                         .show()
                 // enable the save button to let user enter a new game name and save it

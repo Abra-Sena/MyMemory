@@ -1,4 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">My Memory</string>
+    <string name="easy_board">Fácil (4 x 2)</string>
+    <string name="medium_board">Medio (6 x 3)</string>
+    <string name="hard_board">Difícil (6 x 4)</string>
+    <string name="save_btn">Salvar</string>
+    <string name="et_game_name">Nombre del juego (ejemplo \'panda_fun\')</string>
+    <string name="et_download_game_name">"Ingresa el nombre del juego"</string>
+    <string name="quit_game">"¿Saliste de tu juego actual? "</string>
+    <string name="game_not_found">"Lo sentimos, no pudimos encontrar ningún juego de este tipo."</string>
+    <string name="playing_game_name">"Ahora estas jugando "</string>
+    <string name="fetch_game">Buscar juego de memoria</string>
+    <string name="create_game">Crea tu propia placa de memoria</string>
+    <string name="choose_game_size">Elige un nuevo tamaño</string>
+    <string name="easy">Fácil:</string>
+    <string name="medium">Medio:</string>
+    <string name="hard">Difícil:</string>
+    <string name="pairs">Pares:</string>
+    <string name="moves">Movimientos:</string>
+    <string name="invalid_move">¡Movimiento inválido!</string>
+    <string name="game_over">¡Ya ganaste!</string>
+    <string name="game_win">¡Ganaste! Felicidades.</string>
+    <string name="choose_pics">Elige fotos</string>
+    <string name="phone_storage_access">Para crear un juego personalizado, debe proporcionar acceso a sus fotos</string>
+    <string name="name_taken">Nombre tomado</string>
+    <string name="name_taken_details">Ya existe un juego con el nombre</string>
+    <string name="name_taken_details_2">Por favor, elija otro</string>
+    <string name="saving_game_error">Error encontrado al guardar el juego</string>
+    <string name="upload_failed">No se pudo cargar la imagen</string>
+    <string name="game_creation_failed">Creación de juego fallida</string>
+    <string name="game_upload_success">¡Carga completa! Vamos a jugar tu juego</string>
 </resources>
