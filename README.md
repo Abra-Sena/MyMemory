@@ -1,6 +1,6 @@
 # MyMemory
 
-Memory Card Game is an android app that allows user to play the default memory game at three difficulty levels: Easy, Medium, and Hard. 
+Memory Card Game is an android app that allows user to play the default memory game at four difficulty levels: Easy, Medium, Hard and Extreme.
 The game is over after all cards on the boards are flipped and have a match. User can create a custom game with images from their phone and play their created game.
 Cards are only displayed in portrait view while playing this game.
 
@@ -25,10 +25,10 @@ Cards are only displayed in portrait view while playing this game.
 ## App Walk-through
 Here's a walk-through of implemented user stories:
 
-<img src="https://i.imgur.com/om44yu6.gif" alt="playing-easy" width=250 />
-<img src="https://i.imgur.com/gZWLbyr.gif" alt="choose-sizes" width=250 />
-<img src="https://i.imgur.com/SQGNpUa.gif" alt="create-custom-game" width=250 />
-<img src="https://i.imgur.com/mLgo5ye.gif" alt="play-custom-game" width=250 />
+![playing-easy](https://i.imgur.com/om44yu6.gif)
+![choose-sizes](https://i.imgur.com/gZWLbyr.gif)
+![create-custom-game](https://i.imgur.com/SQGNpUa.gif)
+![play-custom-game](https://i.imgur.com/mLgo5ye.gif)
 
 GIF created with [Kap](https://getkap.co).
 
@@ -38,7 +38,7 @@ GIF created with [Kap](https://getkap.co).
 ### Challenges encountered while building the app.
 - It was challenging to come up with a good app icon and UI because I do not have design experience.
 - Retrieve the coordinates, exact position of a cards to animate match found.
-- Track the time while game is on
+- Track the time while game is on.
 
 ### Extension ideas
 > - User authentication to allow them to have a list of all the custom games available
