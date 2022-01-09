@@ -14,6 +14,7 @@ import android.provider.MediaStore
 import android.text.Editable
 import android.text.InputFilter
 import android.text.TextWatcher
+import android.util.DisplayMetrics
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
@@ -25,8 +26,11 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.emissa.mymemory.models.BoardSize
 import com.emissa.mymemory.utils.*
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.analytics.ktx.logEvent
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.remoteconfig.ktx.remoteConfig
 import com.google.firebase.storage.ktx.storage
 import java.io.ByteArrayOutputStream
 
@@ -45,13 +49,15 @@ class CreateActivity : AppCompatActivity() {
     private lateinit var etGameName: EditText
     private lateinit var btnSave: Button
     private lateinit var pbUploading: ProgressBar
-
     private lateinit var adapter: ImagePickerAdapter
     private lateinit var boardSize: BoardSize
     private var numImagesRequired = -1
     private val chosenImageUris = mutableListOf<Uri>()
+    private val firebaseAnalytics = Firebase.analytics
+    private val remoteConfig = Firebase.remoteConfig
     private val storage = Firebase.storage
     private val db = Firebase.firestore
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -138,7 +144,7 @@ class CreateActivity : AppCompatActivity() {
             return
         }
 
-        // when usr inputted valid data
+        // when user inputted valid data
         val selectedUri = data.data
         val clipData = data.clipData
         if (clipData != null) {
@@ -164,10 +170,13 @@ class CreateActivity : AppCompatActivity() {
     private fun saveDataToFireBase() {
         Log.i(TAG, "savedDataToFireBase")
 
+        val customGameName = etGameName.text.toString()
+        firebaseAnalytics.logEvent("creation_save_attempt") {
+            param("game_name", customGameName)
+        }
         //disable save button when user clicks on it
         btnSave.isEnabled = false
 
-        val customGameName = etGameName.text.toString()
         // check that we're not over writing someone else's data
         db.collection("games").document(customGameName).get().addOnSuccessListener { document ->
             if (document != null && document.data != null) {
@@ -218,10 +227,10 @@ class CreateActivity : AppCompatActivity() {
                             return@addOnCompleteListener
                         }
 
-                        val downloadUrl =  downloadUrlTask.result.toString()
-                        uploadedImageUrls.add(downloadUrl)
                         // update the progress each time an image is uploaded
                         pbUploading.progress = uploadedImageUrls.size *100 / chosenImageUris.size
+                        val downloadUrl =  downloadUrlTask.result.toString()
+                        uploadedImageUrls.add(downloadUrl)
                         Log.i(TAG, "Finished uploading $photoUri, num uploaded ${uploadedImageUrls.size}")
                         if (uploadedImageUrls.size == chosenImageUris.size) {
                             handleAllImagesUploaded(gameName, uploadedImageUrls)
@@ -243,9 +252,12 @@ class CreateActivity : AppCompatActivity() {
                         Toast.makeText(this, getString(R.string.game_creation_failed), Toast.LENGTH_SHORT).show()
                         return@addOnCompleteListener
                     }
+                    firebaseAnalytics.logEvent("creation_save_success") {
+                        param("game_name", gameName)
+                    }
                     Log.i(TAG, "Successfully created game $gameName")
                     AlertDialog.Builder(this)
-                            .setTitle(getString(R.string.game_upload_success) + "'$gameName'")
+                            .setTitle(getString(R.string.game_upload_success) + " '$gameName'")
                             .setPositiveButton("OK") {_, _ ->
                                 // pass back to main activity the game name once user clicks OK button
                                 val resultData = Intent()
@@ -266,10 +278,10 @@ class CreateActivity : AppCompatActivity() {
             MediaStore.Images.Media.getBitmap(contentResolver, photoUri)
         }
         Log.i(TAG, "Original width ${originalBitmap.width} and height ${originalBitmap.height}")
-        val scaledBitmap = BitmapScaler.scaleToFitHeight(originalBitmap, 250)
+        val scaledBitmap = BitmapScaler.scaleToFitHeight(originalBitmap, remoteConfig.getLong("scaled_height").toInt())
         Log.i(TAG, "Scaled width ${scaledBitmap.height} and height ${scaledBitmap.width}")
         val byteOutputStream = ByteArrayOutputStream()
-        scaledBitmap.compress(Bitmap.CompressFormat.JPEG, 60, byteOutputStream)
+        scaledBitmap.compress(Bitmap.CompressFormat.JPEG, remoteConfig.getLong("compress_quality").toInt(), byteOutputStream)
         return byteOutputStream.toByteArray()
     }
 

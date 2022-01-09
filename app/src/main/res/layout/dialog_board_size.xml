@@ -34,5 +34,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/hard_board" />
+        <RadioButton
+            android:id="@+id/rbExtreme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/extreme_board" />
     </RadioGroup>
 </androidx.constraintlayout.widget.ConstraintLayout>

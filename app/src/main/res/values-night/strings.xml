@@ -17,6 +17,7 @@
     <string name="easy">Easy:</string>
     <string name="medium">Medium:</string>
     <string name="hard">Hard:</string>
+    <string name="extreme">Extreme:</string>
     <string name="pairs">Pairs:</string>
     <string name="moves">Moves:</string>
     <string name="invalid_move">Invalid move!</string>

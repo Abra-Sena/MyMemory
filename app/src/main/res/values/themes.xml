@@ -14,4 +14,23 @@
         <!-- Customize your theme here. -->
         <item name="android:navigationBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
     </style>
+
+    <!--  Customize code from StyleableToast github to handle Toast styling  -->
+    <style name="myToast">
+        <item name="stTextBold">true</item>
+        <item name="stTextColor">@color/white</item>
+        <item name="stTextSize">20sp</item>
+        <item name="stColorBackground">@color/yellow_darkest</item>
+        <item name="stSolidBackground">true</item>
+        <item name="stLength">LONG</item> LONG or SHORT
+        <item name="stGravity">center</item> top or center
+<!--        <item name="stFont">@font/retrofont</item>-->
+<!--        <item name="stStrokeWidth">3dp</item>-->
+<!--        <item name="stStrokeColor">#fff</item>-->
+<!--        <item name="stIconStart">@drawable/ic</item>-->
+<!--        <item name="stIconEnd">@drawable/ic</item>-->
+<!--        <item name="stRadius">5dp</item>-->
+    </style>
+
+
 </resources>

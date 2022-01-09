@@ -3,7 +3,8 @@ package com.emissa.mymemory.models
 enum class BoardSize (val numCards: Int) {
     EASY(8),
     MEDIUM(18),
-    HARD(24);
+    HARD(24),
+    EXTREME(30);
 
     companion object {
         fun getByValue(value: Int) = values().first { it.numCards == value }
@@ -14,6 +15,7 @@ enum class BoardSize (val numCards: Int) {
             EASY -> 2
             MEDIUM -> 3
             HARD -> 4
+            EXTREME -> 5
         }
     }
 

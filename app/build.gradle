@@ -20,8 +20,7 @@ android {
 
     buildTypes {
         release {
-            // setting this to true will shrink the size of the app
-            minifyEnabled true
+            minifyEnabled true // setting this to true will shrink the size of the app
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -48,6 +47,9 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:26.2.0')
     implementation 'com.google.firebase:firebase-firestore-ktx'
     implementation 'com.google.firebase:firebase-storage-ktx'
+    implementation 'com.google.firebase:firebase-config-ktx'
+    implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.github.jinatonic.confetti:confetti:1.1.2'
+    implementation 'io.github.muddz:styleabletoast:2.4.0'
 }

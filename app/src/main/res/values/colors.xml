@@ -13,4 +13,9 @@
     <color name="yellow_dark">#D6C93B</color>
     <color name="yellow_darkest">#87842E</color>
     <color name="yellow_green">#CCD647</color>
+    <!--    CONFETTI - MATCH FOUNDED   -->
+    <color name="confetti_1">#77D1A0</color>
+    <color name="confetti_2">#0F6B23</color>
+    <color name="confetti_3">#D16258</color>
+    <color name="confetti_4">#2C9153</color>
 </resources>

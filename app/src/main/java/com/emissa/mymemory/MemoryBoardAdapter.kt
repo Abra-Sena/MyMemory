@@ -23,8 +23,8 @@ class MemoryBoardAdapter(
 ) : RecyclerView.Adapter<MemoryBoardAdapter.ViewHolder>() {
 
     companion object {
-        private const val MARGIN_SIZE = 10
         private const val TAG = "MemoryBoardAdapter"
+        private const val MARGIN_SIZE = 10
     }
 
     interface CardClickListener {
@@ -32,10 +32,13 @@ class MemoryBoardAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        Log.i(TAG, "Parent width = ${parent.width}")
+        Log.i(TAG, "Parent height = ${parent.height}")
+
         val cardWidth = parent.width / boardSize.getWidth() - (2 * MARGIN_SIZE)
         val cardHeight = parent.height / boardSize.getHeight() - (2 * MARGIN_SIZE)
         val cardSideLength = min(cardWidth, cardHeight)
-
+        // get appropriate dimensions (width and height) for the view
         val view = LayoutInflater.from(context).inflate(R.layout.memory_card, parent, false)
         val layoutParams = view.findViewById<CardView>(R.id.cardView).layoutParams as ViewGroup.MarginLayoutParams
 
@@ -52,7 +55,7 @@ class MemoryBoardAdapter(
     }
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        private val imageButton = itemView.findViewById<ImageButton>(R.id.imageButton)
+         private val imageButton: ImageButton = itemView.findViewById<ImageButton>(R.id.imageButton)
 
         fun bind(position: Int) {
             val memoryCard = cards[position]
@@ -64,8 +67,9 @@ class MemoryBoardAdapter(
                     imageButton.setImageResource(memoryCard.identifier)
                 }
             } else {
-                imageButton.setImageResource(R.drawable.launcher_bg)
+                imageButton.setImageResource(R.drawable.flip_card_bg)
             }
+
 
             // the alpha value refer to opacity (how visible is the image button)
             imageButton.alpha = if (memoryCard.isMatched) .4f else 1.0f

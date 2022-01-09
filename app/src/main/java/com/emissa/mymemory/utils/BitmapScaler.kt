@@ -14,6 +14,6 @@ object BitmapScaler {
     // scale and maintain aspect ration given a desired height
     fun scaleToFitHeight(b: Bitmap, height: Int): Bitmap {
         val factor = height / b.height.toFloat()
-        return Bitmap.createScaledBitmap(b, height, (b.width * factor).toInt(), true)
+        return Bitmap.createScaledBitmap(b, (b.width * factor).toInt(),  height, true)
     }
 }

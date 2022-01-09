@@ -3,6 +3,7 @@
     <string name="easy_board">Easy (4 x 2)</string>
     <string name="medium_board">Medium (6 x 3)</string>
     <string name="hard_board">Hard (6 x 4)</string>
+    <string name="extreme_board">Extreme (6 x 5)</string>
     <string name="save_btn">Save</string>
     <string name="et_game_name">Game name (example: \'panda_fun\')</string>
     <string name="et_download_game_name">Enter game name</string>
@@ -17,11 +18,13 @@
     <string name="easy">Easy:</string>
     <string name="medium">Medium:</string>
     <string name="hard">Hard:</string>
+    <string name="extreme">Extreme:</string>
     <string name="pairs">Pairs:</string>
     <string name="moves">Moves:</string>
     <string name="invalid_move">Invalid move!</string>
     <string name="game_over">You already won!</string>
     <string name="game_win">You won! Congratulations.</string>
+    <string name="game_time">Game duration:</string>
 
     <!-- Create activity strings -->
     <string name="choose_pics">Choose pics</string>

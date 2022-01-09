@@ -17,6 +17,10 @@ class ImagePickerAdapter(
     private val imageClickListener: ImageClickListener
 ) : RecyclerView.Adapter<ImagePickerAdapter.ViewHolder>() {
 
+    companion object {
+        private const val TAG = "ImagePickerAdapter"
+    }
+
     interface ImageClickListener {
         fun onPlaceholderClicked()
     }
@@ -47,17 +51,16 @@ class ImagePickerAdapter(
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val ivCustomImage = itemView.findViewById<ImageView>(R.id.ivCustomImage)
 
+        fun bind() {
+            ivCustomImage.setOnClickListener {
+                // launch intent for user to select photos from their phone/gallery
+                imageClickListener.onPlaceholderClicked()
+            }
+        }
+
         fun bind(uri: Uri) {
             ivCustomImage.setImageURI(uri)
             ivCustomImage.setOnClickListener(null)
-
-        }
-
-        fun bind() {
-            ivCustomImage.setOnClickListener {
-                // launch intent for user to select photos from their phone
-                imageClickListener.onPlaceholderClicked()
-            }
         }
     }
 
