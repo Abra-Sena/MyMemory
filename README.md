@@ -25,7 +25,7 @@ Cards are only displayed in portrait view while playing this game.
 ## App Walk-through
 Here's a walk-through of implemented user stories:
 
-![playing-easy](https://i.imgur.com/om44yu6.gif)
+![playing-easy](https://imgur.com/om44yu6)
 ![choose-sizes](https://i.imgur.com/gZWLbyr.gif)
 ![create-custom-game](https://i.imgur.com/SQGNpUa.gif)
 ![play-custom-game](https://i.imgur.com/mLgo5ye.gif)
