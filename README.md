@@ -26,11 +26,11 @@ Cards are only displayed in portrait view while playing this game.
 Here's a walk-through of implemented user stories:
 
 <img src="https://i.imgur.com/xx2eG80.gif" width=250 title="playing-easy" alt="playing-easy" />
-<img src="https://i.imgur.com/wW8A2bt.gif" width=250 title="choose-sizes" alt="choose-sizes" />
-<img src="https://i.imgur.com/zhliddU.gif" width=250 title="create-custom-game" alt="create-custom-game" />
-<img src="https://i.imgur.com/oMSXRre.gif" width=250 title="play-custom-game" alt="play-custom-game" />
+<img src="https://i.imgur.com/bkeiwL2.gif" width=250 title="choose-sizes" alt="choose-sizes" />
+<img src="https://i.imgur.com/zGa7WsB.gif" width=250 title="create-custom-game" alt="create-custom-game" />
+<img src="https://i.imgur.com/0Q4Ik9e.gif" width=250 title="play-custom-game" alt="play-custom-game" />
 
-GIF created with [Kap](https://getkap.co).
+GIF created with [Kap](https://getkap.co) and resized with [Xconvert](https://www.xconvert.com/compress-gif).
 
 
 ## Notes
