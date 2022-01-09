@@ -25,11 +25,6 @@ Cards are only displayed in portrait view while playing this game.
 ## App Walk-through
 Here's a walk-through of implemented user stories:
 
-![playing-easy](https://i.imgur.com/xx2eG80.gif) 
-![choose-sizes](https://i.imgur.com/wW8A2bt.gif) 
-![create-custom-game](https://i.imgur.com/zhliddU.gif) 
-![play-custom-game](https://i.imgur.com/oMSXRre.gif)
-
 <img src="https://i.imgur.com/xx2eG80.gif" width=250 title="playing-easy" alt="playing-easy" />
 <img src="https://i.imgur.com/wW8A2bt.gif" width=250 title="choose-sizes" alt="choose-sizes" />
 <img src="https://i.imgur.com/zhliddU.gif" width=250 title="create-custom-game" alt="create-custom-game" />
