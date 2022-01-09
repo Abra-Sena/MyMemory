@@ -25,10 +25,10 @@ Cards are only displayed in portrait view while playing this game.
 ## App Walk-through
 Here's a walk-through of implemented user stories:
 
-<img src="https://i.imgur.com/om44yu6.gif" width=250 title="playing-easy" alt="playing-easy">
-<img src="https://i.imgur.com/gZWLbyr.gif" width=250 title="choose-sizes" alt="choose-sizes">
-<img src="https://i.imgur.com/SQGNpUa.gif" width=250 title="create-custom-game" alt="create-custom-game">
-<img src="https://i.imgur.com/mLgo5ye.gif" width=250 title="play-custom-game" alt="play-custom-game">
+<img src="https://i.imgur.com/om44yu6.gif" title="playing-easy" alt="playing-easy", width=400>
+<img src="https://i.imgur.com/gZWLbyr.gif" title="choose-sizes" alt="choose-sizes", width=400>
+<img src="https://i.imgur.com/SQGNpUa.gif" title="create-custom-game" alt="create-custom-game", width=400>
+<img src="https://i.imgur.com/mLgo5ye.gif" title="play-custom-game" alt="play-custom-game", width=400>
 
 GIF created with [Kap](https://getkap.co).
 
@@ -36,14 +36,14 @@ GIF created with [Kap](https://getkap.co).
 ## Notes
 
 ### Challenges encountered while building the app.
-- I have no design experience, but love beautiful designs. It was challenging to come up with a good app icon and UI.
+- It was challenging to come up with a good app icon and UI because I do not have design experience.
 - Retrieve the coordinates, exact position of a cards to animate match found.
 - Track the time while game is on
 
 ### Extension ideas
 > - User authentication to allow them to have a list of all the custom games available
-> - [x] Allow user to view and play other people's custom game on authentication
-> - [x] Show a list of all custom games created by users
+> - Allow user to view and play other people's custom game on authentication
+> - Show a list of all custom games created by users
 
 ## Open-source libraries used and others
 
